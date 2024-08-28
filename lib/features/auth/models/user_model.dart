@@ -34,8 +34,8 @@ class UserModel {
       firstName: map['firstName'] ?? '',
       lastName: map['lastName'] ?? '',
       email: map['email'] ?? '',
-      createdAt: DateTime.fromMillisecondsSinceEpoch(map['createdAt']),
-      tweet: List<String>.from(map['tweet']),
+      createdAt:   DateTime.parse(map['createdAt'] ?? DateTime.now().toIso8601String()),
+      tweet: List.from(map['tweet']??[]),
     );
   }
 

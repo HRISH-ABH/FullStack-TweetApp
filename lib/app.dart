@@ -34,13 +34,13 @@ class _InitialPageState extends State<InitialPage> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
+    return StreamBuilder<String?>(
         stream: InitialPage.authStream.stream,
         builder: (context, snapshot) {
-          if (snapshot.data == null || (snapshot.data?.isEmpty ?? true)) {
-            return OnboardingScreen();
-          } else {
+          if (snapshot.hasData) {
             return TweetsPage();
+          } else {
+            return OnboardingScreen();
           }
         });
   }

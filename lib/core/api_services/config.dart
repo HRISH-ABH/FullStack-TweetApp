@@ -1,3 +1,3 @@
 class Config {
-  static const String serverURL = "https://blog-backend-fugd.onrender.com/api/v1";
+  static const String serverURL = "https://backendfullstacktweetapp.onrender.com/api/ver1/";
 }

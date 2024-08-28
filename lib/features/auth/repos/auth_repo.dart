@@ -9,7 +9,8 @@ class AuthRepo {
     try {
       Dio dio = Dio();
 
-      final response = await dio.get(Config.serverURL + "user/{$uid}");
+      // Correcting the URL construction
+      final response = await dio.get('${Config.serverURL}/user/$uid');
 
       if (response.statusCode == 200) {
         UserModel userModel = UserModel.fromMap(response.data);
@@ -22,6 +23,8 @@ class AuthRepo {
       return null;
     }
   }
+
+
 
   static Future<bool> createUserRepo(UserModel userModel) async {
     Dio dio = Dio();

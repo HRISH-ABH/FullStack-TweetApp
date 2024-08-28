@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
 import 'package:tweetapp/app.dart';
+import 'package:tweetapp/core/local_db/shared_preferences.dart';
 import 'package:tweetapp/features/auth/models/user_model.dart';
 import 'package:tweetapp/features/auth/repos/auth_repo.dart';
 
@@ -17,10 +18,6 @@ enum AuthType { login, register }
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc() : super(AuthInitial()) {
     on<AuthenticationEvent>(authenticationEvent);
-    {
-      // TODO: implement event handler
-    }
-    ;
   }
 
   Future<FutureOr<void>> authenticationEvent(
@@ -29,6 +26,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     switch (event.authType) {
       case AuthType.login:
         try {
+          log(event.email);
+          log(event.pass);
           credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
             email: event.email,
             password: event.pass,
@@ -106,6 +105,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           ),
         );
         if (success) {
+          await SharedPreferencesManager.saveUid(credential.user?.uid ?? "");
           InitialPage.authStream.add(credential.user?.uid ?? "");
           emit(AuthSuccessState());
         } else {
